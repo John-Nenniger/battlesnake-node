@@ -44,8 +44,8 @@ app.post('/start', (request, response) => {
 app.post('/move', (request, response) => {
   // NOTE: Do something here to generate your move
   console.log(`my health:  ${request.body.you.health}`)
-  console.log(`snakes:  ${request.body.snakes}`)
-  console.log(`food:  ${request.body.food}`)
+  console.log(`snakes:  ${request.body.snakes.data}`)
+  console.log(`food:  ${request.body.food.data}`)
   // Response data
   const data = {
     move: randomDirection(), // one of: ['up','down','left','right']
