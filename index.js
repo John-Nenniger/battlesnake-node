@@ -21,6 +21,11 @@ app.use(poweredByHandler)
 
 // --- SNAKE LOGIC GOES BELOW THIS LINE ---
 
+function randomDirection(){
+  const directions = ['up', 'down', 'left', 'right']
+  return directions[Math.floor(Math.random()*Math.floor(4))]
+}
+
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
   // NOTE: Do something here to start the game
@@ -41,7 +46,7 @@ app.post('/move', (request, response) => {
 
   // Response data
   const data = {
-    move: 'up', // one of: ['up','down','left','right']
+    move: randomDirection(), // one of: ['up','down','left','right']
     taunt: 'Outta my way, snake!', // optional, but encouraged!
   }
 
