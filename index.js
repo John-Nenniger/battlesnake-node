@@ -34,7 +34,7 @@ app.post('/start', (request, response) => {
   const data = {
     color: '#DFFF00',
     head_url: 'http://www.placecage.com/c/200/200', // optional, but encouraged!
-    taunt: "Let's do thisss thang!", // optional, but encouraged!
+    taunt: "Not even I know what Im about to do!", // optional, but encouraged!
   }
 
   return response.json(data)
@@ -43,7 +43,7 @@ app.post('/start', (request, response) => {
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
   // NOTE: Do something here to generate your move
-
+  console.log("request: ", request, "response: ", response)
   // Response data
   const data = {
     move: randomDirection(), // one of: ['up','down','left','right']
