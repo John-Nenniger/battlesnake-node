@@ -36,7 +36,6 @@ function randomDirection(prevDirection){
   return directions[Math.floor(Math.random()*Math.floor(3))]
 }
 
-console.log(randomDirection("up"))
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
   // NOTE: Do something here to start the game
