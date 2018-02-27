@@ -47,7 +47,7 @@ let move = ""
 app.post('/move', (request, response) => {
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
-
+    console.log(move)
     if (request.body.turn === 0){
       move = "right"
     } else {
