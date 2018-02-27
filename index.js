@@ -22,11 +22,21 @@ app.use(poweredByHandler)
 // --- SNAKE LOGIC GOES BELOW THIS LINE ---
 
 function randomDirection(prevDirection){
-  const directions = ['up', 'down', 'left', 'right']
-  return directions.filter(direction => direction !== prevDirection)[Math.floor(Math.random()*Math.floor(3))]
+  let directions = [];
+  switch (prevDirection){
+    case "up": directions = ['up', 'left', 'right']
+    break;
+    case "down": directions = ['left', 'right', "down"]
+    break;
+    case "left": directions = ['left', 'up', "down"]
+    break;
+    case "right": directions = ['right', 'up', "down"]
+    break;
+  }
+  return directions[Math.floor(Math.random()*Math.floor(3))]
 }
 
-randomDirection("up")
+console.log(randomDirection("up"))
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
   // NOTE: Do something here to start the game
