@@ -21,11 +21,12 @@ app.use(poweredByHandler)
 
 // --- SNAKE LOGIC GOES BELOW THIS LINE ---
 
-function randomDirection(){
+function randomDirection(prevDirection){
   const directions = ['up', 'down', 'left', 'right']
-  return directions[Math.floor(Math.random()*Math.floor(4))]
+  return directions.filter(direction => direction !== prevDirection)[Math.floor(Math.random()*Math.floor(3))]
 }
 
+randomDirection("up")
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
   // NOTE: Do something here to start the game
@@ -40,25 +41,23 @@ app.post('/start', (request, response) => {
   return response.json(data)
 })
 
+let move = ""
+
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
-  // console.log(`my health:  ${request.body.you.health}`)
-  // console.log(`turn number: ${request.body.turn}`)
-  // request.body.snakes.data[0].body.data.forEach((snake) => {
-  //   console.log(`a snake: ${snake}`)
-  // })
-  // request.body.you.body.data[0].forEach((youObj) => {
-  //   console.log(`me object:${youObj}`)
-  // })
-  //
-  console.log(`food is here: x:${request.body.food.data[0].x} y:${request.body.food.data[0].y}`)
-  console.log(`I am HERE! x:${request.body.you.body.data[0].x} y:${request.body.you.body.data[0].y}`)
-  // console.log(`this is how long the dumb  ${typeof request.body.food.data[0]}   ${request.body.food.data[0].length}`)
-  // console.log(`snakes:  ${request.body.snakes.data}`)
+  const food = [request.body.food.data[0].x, request.body.food.data[0].y]
+  const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
+
+    if (request.body.turn === 0){
+      move = "right"
+    } else {
+      move = randomDirection(move)
+    }
+
   // Response data
   const data = {
-    move: randomDirection(), // one of: ['up','down','left','right']
-    taunt: 'Outta my way, snake!', // optional, but encouraged!
+    move: move, // one of: ['up','down','left','right']
+    taunt: 'WHEREMA GONNA GO?!', // optional, but encouraged!
   }
 
   return response.json(data)
@@ -73,3 +72,22 @@ app.use(genericErrorHandler)
 app.listen(app.get('port'), () => {
   console.log('Server listening on port %s', app.get('port'))
 })
+
+
+
+// LOG GARBAGE
+
+// console.log(`my health:  ${request.body.you.health}`)
+// console.log(`turn number: ${request.body.turn}`)
+// request.body.snakes.data[0].body.data.forEach((snake) => {
+//   console.log(`a snake: ${snake}`)
+// })
+// request.body.you.body.data[0].forEach((youObj) => {
+//   console.log(`me object:${youObj}`)
+// })
+
+// console.log(`this is how long the dumb  ${typeof request.body.food.data[0]}   ${request.body.food.data[0].length}`)
+// console.log(`snakes:  ${request.body.snakes.data}`)
+
+// console.log(`food is here: x:${request.body.food.data[0].x} y:${request.body.food.data[0].y}`)
+// console.log(`I am HERE! x:${request.body.you.body.data[0].x} y:${request.body.you.body.data[0].y}`)
