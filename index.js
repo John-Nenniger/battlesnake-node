@@ -43,13 +43,13 @@ app.post('/start', (request, response) => {
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
   // NOTE: Do something here to generate your move
-  console.log(`my health:  ${request.body.you.health}`)
-  console.log(`turn number: ${request.body.turn}`)
-  request.body.snakes.data[0].body.data.forEach((snake) => {
-    console.log(snake)
-  })
+  // console.log(`my health:  ${request.body.you.health}`)
+  // console.log(`turn number: ${request.body.turn}`)
+  // request.body.snakes.data[0].body.data.forEach((snake) => {
+  //   console.log(`a snake: ${snake}`)
+  // })
   request.body.you.body.data[0].forEach((youObj) => {
-    console.log(youObj)
+    console.log(`me object:${youObj}`)
   })
 
   console.log(`food is here: ${request.body.food.data[0]}`)
