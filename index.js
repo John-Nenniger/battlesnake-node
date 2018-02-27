@@ -48,8 +48,12 @@ app.post('/move', (request, response) => {
   request.body.snakes.data[0].body.data.forEach((snake) => {
     console.log(snake)
   })
+  request.body.you.body.data[0].forEach((youObj) => {
+    console.log(youObj)
+  })
 
   console.log(`food is here: ${request.body.food.data[0]}`)
+  console.log(`this is how long the dumb  ${typeof request.body.food.data[0]}   ${request.body.food.data[0].length}`)
   // console.log(`snakes:  ${request.body.snakes.data}`)
   // Response data
   const data = {
