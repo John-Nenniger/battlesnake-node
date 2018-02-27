@@ -44,8 +44,13 @@ app.post('/start', (request, response) => {
 app.post('/move', (request, response) => {
   // NOTE: Do something here to generate your move
   console.log(`my health:  ${request.body.you.health}`)
-  console.log(`snakes:  ${request.body.snakes.data}`)
-  console.log(`food:  ${request.body.food.data}`)
+  console.log(`turn number: ${request.body.turn}`)
+  request.body.snakes.data[0].body.data.forEach((snake) => {
+    console.log(snake)
+  })
+
+  console.log(`food is here: ${request.body.food.data[0]}`)
+  // console.log(`snakes:  ${request.body.snakes.data}`)
   // Response data
   const data = {
     move: randomDirection(), // one of: ['up','down','left','right']
