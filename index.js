@@ -52,7 +52,7 @@ app.post('/move', (request, response) => {
   // })
   //
   console.log(`food is here: x:${request.body.food.data[0].x} y:${request.body.food.data[0].y}`)
-  console.log(`I am HERE!${request.body.you.body.data[0]}`)
+  console.log(`I am HERE! x:${request.body.you.body.data[0].x} y:${request.body.you.body.data[0].y}`)
   // console.log(`this is how long the dumb  ${typeof request.body.food.data[0]}   ${request.body.food.data[0].length}`)
   // console.log(`snakes:  ${request.body.snakes.data}`)
   // Response data
