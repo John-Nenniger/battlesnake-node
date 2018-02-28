@@ -23,6 +23,7 @@ app.use(poweredByHandler)
 
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
+  console.log(request.body)
   // NOTE: Do something here to start the game
 
   // Response data
