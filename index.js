@@ -59,7 +59,7 @@ app.post('/move', (request, response) => {
   }
 
   let end = Date.now();
-  console.log(end, start)
+  console.log(end, start);
   return response.json(data)
 })
 
