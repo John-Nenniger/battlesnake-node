@@ -47,6 +47,7 @@ app.post('/start', (request, response) => {
 
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
+  let start = Date.now();
 
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
@@ -57,6 +58,8 @@ app.post('/move', (request, response) => {
     taunt: 'Outta my way, snake!', // optional, but encouraged!
   }
 
+  let end = Date.now();
+  console.log(end, start)
   return response.json(data)
 })
 
