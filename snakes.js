@@ -1,6 +1,9 @@
 const snek = require('./snekJson');
 
-const grid = [];
+const adjacentToSnakeWeight = -10;
+const snakeWeight = -8;
+
+let grid = [];
 for (let x = 0; x < 20; x++) {
     const column = [];
     column[19] = 0;
@@ -9,10 +12,21 @@ for (let x = 0; x < 20; x++) {
 }
 
 const paintAroundSnakes = (gameGrid, coords) => {
-    gameGrid[coords.x][coords.y - 1] = -8 // top
-    gameGrid[coords.x + 1][coords.y] = -8 // right
-    gameGrid[coords.x][coords.y + 1] = -8 // down
-    gameGrid[coords.x - 1][coords.y] = -8 // left
+    if (coords.y - 1 > 0) {
+        gameGrid[coords.y - 1][coords.x] = adjacentToSnakeWeight // TOP
+    }
+
+    if (coords.y + 1 < gameGrid.length) {
+        gameGrid[coords.y + 1][coords.x] = adjacentToSnakeWeight // DOWN
+    }
+
+    if (coords.x + 1 < gameGrid.length) {
+        gameGrid[coords.y][coords.x + 1] = adjacentToSnakeWeight // RIGHT
+    }
+
+    if (coords.x - 1 > 0) {
+        gameGrid[coords.y][coords.x - 1] = adjacentToSnakeWeight // LEFT
+    }
 
     return true;
 }
@@ -22,13 +36,20 @@ const updateGridWithSnakes = (gameGrid, snakePositions) => {
 
         snake.body.data.forEach(coords => {
             paintAroundSnakes(gameGrid, coords);
-            gameGrid[coords.y][coords.x] = -10;
+            // gameGrid[coords.y][coords.x] = snakeWeight;
+        })
+        snake.body.data.forEach(coords => {
+            // paintAroundSnakes(gameGrid, coords);
+            gameGrid[coords.y][coords.x] = snakeWeight;
         })
     })
 
     return true;
 }
 
-updateGridWithSnakes(grid, snek.json)
-
 module.exports = updateGridWithSnakes;
+
+/* TESTING */
+
+// updateGridWithSnakes(grid, snek.json)
+// console.log(grid);
