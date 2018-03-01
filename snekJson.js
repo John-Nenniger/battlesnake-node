@@ -104,5 +104,3 @@ module.exports.json = {
         "taunt": ""
     }
 }
-
-exports = module.exports;

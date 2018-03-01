@@ -8,15 +8,19 @@ for (let x = 0; x < 20; x++) {
     grid.push(column);
 }
 
+const paintAroundSnakes = (gameGrid, coords) => {
+
+}
+
 const updateGridWithSnakes = (gameGrid, snakePositions) => {
     snakePositions.snakes.data.forEach(snake => {
 
         snake.body.data.forEach(coords => {
-            gameGrid[coords.y][coords.x] = 5
+            gameGrid[coords.y][coords.x] = -10;
         })
     })
 }
 
-console.log(grid)
 updateGridWithSnakes(grid, snek.json)
-console.log(grid)
+
+module.exports = updateGridWithSnakes;
