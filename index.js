@@ -21,19 +21,19 @@ app.use(poweredByHandler)
 
 // --- SNAKE LOGIC GOES BELOW THIS LINE ---
 
-function randomDirection(prevDirection){
+function randomDirection(prevDirection) {
   let directions = [];
-  switch (prevDirection){
+  switch (prevDirection) {
     case "up": directions = ['up', 'left', 'right']
-    break;
+      break;
     case "down": directions = ['left', 'right', "down"]
-    break;
+      break;
     case "left": directions = ['left', 'up', "down"]
-    break;
+      break;
     case "right": directions = ['right', 'up', "down"]
-    break;
+      break;
   }
-  return directions[Math.floor(Math.random()*Math.floor(3))]
+  return directions[Math.floor(Math.random() * Math.floor(3))]
 }
 
 // Handle POST request to '/start'
@@ -56,12 +56,12 @@ let move = ""
 app.post('/move', (request, response) => {
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
-    console.log(move)
-    if (request.body.turn === 0){
-      move = "right"
-    } else {
-      move = randomDirection(move)
-    }
+  console.log(move)
+  if (request.body.turn === 0) {
+    move = "right"
+  } else {
+    move = randomDirection(move)
+  }
 
   // Response data
   const data = {
