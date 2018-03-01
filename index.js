@@ -12,6 +12,7 @@ const {
 // Define global variables that will persist between turns
 let foodPosition = []; // will just have an x and a y value
 const grid = [];
+
 for (let x = 0; x < 20; x++){
   const column = [];
   column[19] = 0;
@@ -70,6 +71,7 @@ app.use(poweredByHandler)
 
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
+  // NOTE: Do something here to start the game
 
   // Response data
   const data = {
@@ -83,6 +85,9 @@ app.post('/start', (request, response) => {
 
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
+
+  let start = Date.now();
+
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
@@ -97,6 +102,8 @@ app.post('/move', (request, response) => {
     taunt: 'Outta my way, snake!', // optional, but encouraged!
   }
 
+  let end = Date.now();
+  console.log(`SNAKE MOVE TOOK ${end - start} MS`);
   return response.json(data)
 })
 
