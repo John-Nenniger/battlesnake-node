@@ -1,7 +1,7 @@
 const snek = require('./snekJson');
 
-const adjacentToSnakeWeight = 2;
-const snakeWeight = 8;
+const adjacentToSnakeWeight = -3;
+const snakeWeight = -12;
 const radius = 2;
 
 let grid = [];
@@ -98,5 +98,5 @@ module.exports = updateGridWithSnakes;
 
 /* TESTING */
 
-updateGridWithSnakes(grid, snek.json)
-console.log(grid);
+// updateGridWithSnakes(grid, snek.json)
+// console.log(grid);

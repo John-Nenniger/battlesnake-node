@@ -9,6 +9,8 @@ const {
   poweredByHandler
 } = require('./handlers.js')
 
+const snakes = require('./snakes');
+
 // Define global variables that will persist between turns
 let foodPosition = []; // will just have an x and a y value
 const grid = [];
@@ -54,8 +56,8 @@ function foodGrid(x, y, grid, weight) {
 }
 
 // just for testing
-foodGrid(3, 14, grid)
-console.log(grid)
+// foodGrid(3, 14, grid)
+// console.log(grid)
 
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
@@ -109,12 +111,14 @@ app.post('/move', (request, response) => {
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
+  snakes.updateGridWithSnakes(grid, request.body);
+
   if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
     foodGrid(food[0], food[1], grid)
     foodPosition = [food[0], food[1]]
   }
 
-
+  console.log(grid)
 
   // Response data
   const data = {
