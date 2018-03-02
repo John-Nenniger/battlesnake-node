@@ -3,10 +3,10 @@ const express = require('express')
 const logger = require('morgan')
 const app = express()
 const {
-  fallbackHandler,
-  notFoundHandler,
-  genericErrorHandler,
-  poweredByHandler
+    fallbackHandler,
+    notFoundHandler,
+    genericErrorHandler,
+    poweredByHandler
 } = require('./handlers.js')
 
 const snakes = require('./snakes');
@@ -27,14 +27,8 @@ app.use(poweredByHandler)
 // Define global variables that will persist between turns
 let prevMove = ''; // tracks previous move
 let foodPosition = []; // will just have an x and a y value
-const grid = []; // game grid/state
+// const grid = defineGrid(); // game grid/state
 
-for (let x = 0; x < 20; x++) {
-  const column = [];
-  column[19] = 0;
-  column.fill(0);
-  grid.push(column);
-}
 
 // Functions go here, to be called in the move listener
 
@@ -42,69 +36,84 @@ for (let x = 0; x < 20; x++) {
 // foodGrid(3, 14, grid)
 // console.log(grid)
 
+function defineGrid(grid = []) {
+    for (let x = 0; x < 20; x++) {
+        const column = [];
+        column[19] = 0;
+        column.fill(0);
+        grid.push(column);
+    }
+    return grid;
+}
+
 function randomDirection(prevDirection) {
-  let directions = [];
-  switch (prevDirection) {
-    case "up":
-      directions = ['up', 'left', 'right']
-      break;
-    case "down":
-      directions = ['left', 'right', "down"]
-      break;
-    case "left":
-      directions = ['left', 'up', "down"]
-      break;
-    case "right":
-      directions = ['right', 'up', "down"]
-      break;
-    default:
-      directions = ['up', 'left', 'down', 'right']
-  }
-  const randMove = directions[Math.floor(Math.random() * Math.floor(directions.length))];
-  prevMove = randMove; // update global prevMove variable
-  return randMove;
+    let directions = [];
+    switch (prevDirection) {
+        case "up":
+            directions = ['up', 'left', 'right']
+            break;
+        case "down":
+            directions = ['left', 'right', "down"]
+            break;
+        case "left":
+            directions = ['left', 'up', "down"]
+            break;
+        case "right":
+            directions = ['right', 'up', "down"]
+            break;
+        default:
+            directions = ['up', 'left', 'down', 'right']
+    }
+    const randMove = directions[Math.floor(Math.random() * Math.floor(directions.length))];
+    prevMove = randMove; // update global prevMove variable
+    return randMove;
 }
 
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
-  // Response data
-  const data = {
-    color: 'teal',
-    head_url: 'http://25.media.tumblr.com/7fcfecd8dba001ecdbae6bff5fe10342/tumblr_mg6awfY46I1s2a05ho1_400.gif', // optional, but encouraged!
-    taunt: "!?", // optional, but encouraged!
-  }
+    // Response data
+    const data = {
+        color: 'teal',
+        head_url: 'http://25.media.tumblr.com/7fcfecd8dba001ecdbae6bff5fe10342/tumblr_mg6awfY46I1s2a05ho1_400.gif', // optional, but encouraged!
+        taunt: "!?", // optional, but encouraged!
+    }
 
-  return response.json(data)
+    return response.json(data)
 })
 
 
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
-  //
-  let start = Date.now();
-  //
-  let move = '';
-  const food = [request.body.food.data[0].x, request.body.food.data[0].y]
-  const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
+    //
+    let start = Date.now();
+    //
+    let move = '';
+    let gameGrid = defineGrid(); // Define a new grid every turn. Solves problem of bleeding of snakes moving around on the board
 
-  // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
-  // Returns an updated game 'state'
-  snakes.updateGridWithSnakes(grid, request.body);
+    const food = [request.body.food.data[0].x, request.body.food.data[0].y]
+    // const food = { x: request.body.food.data[0].x, y: request.body.food.data[0].y}
+    // const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
-  if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
-    foodGrid.updateFoodGrid(food[0], food[1], grid)
+    // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
+    // Returns an updated game 'state'
+    snakes.updateGridWithSnakes(gameGrid, request.body);
+
+    // if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
+    foodGrid.updateFoodGrid(food[0], food[1], gameGrid)
     foodPosition = [food[0], food[1]]
-  }
+    // }
 
+    console.log('gameGrid')
 
-  // Response data
-  const data = {
-    move: move || randomDirection(prevMove), // If no move is defined default to a random direction. prevMove is a global var that keeps track of the prev move
-    taunt: 'WHEREMA GONNA GO?!'
-  }
-  let end = Date.now();
-  console.log(`SNAKE MOVE TOOK ${end - start} MS`);
-  return response.json(data)
+    // Response data
+    const data = {
+        move: move || randomDirection(prevMove), // If no move is defined default to a random direction. prevMove is a global var that keeps track of the prev move
+        taunt: 'WHEREMA GONNA GO?!'
+    }
+
+    let end = Date.now();
+    console.log(`SNAKE MOVE TOOK ${end - start} MS`);
+    return response.json(data)
 })
 
 /* ----- END_SNEK_CODE ----- */
@@ -114,7 +123,7 @@ app.use(notFoundHandler)
 app.use(genericErrorHandler)
 
 app.listen(app.get('port'), () => {
-  console.log('Server listening on port %s', app.get('port'))
+    console.log('Server listening on port %s', app.get('port'))
 })
 
 // LOG GARBAGE

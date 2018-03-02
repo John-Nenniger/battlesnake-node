@@ -1,16 +1,8 @@
 const snek = require('./snekJson');
 
-const adjacentToSnakeWeight = -3;
-const snakeWeight = -12;
+const adjacentToSnakeWeight = 1;
+const snakeWeight = 2;
 const radius = 2;
-
-let grid = [];
-for (let x = 0; x < 20; x++) {
-    const column = [];
-    column[19] = 0;
-    column.fill(0);
-    grid.push(column);
-}
 
 const paintAroundSnakes = (gameGrid, coords, distance) => {
     // Will only update the grid if the coordinates provided 
@@ -18,7 +10,10 @@ const paintAroundSnakes = (gameGrid, coords, distance) => {
 
     let d = distance;
     let dDiag = Math.ceil(d / 2);
+
     let weighting = adjacentToSnakeWeight
+    const boardLength = gameGrid.length;
+
     // d is equal to the 'radius' to paint around paint from the outside in. Stop when d < 0
     // adjacentToSnakeWeight can also be adjusted on every increment
 
@@ -40,12 +35,12 @@ const paintAroundSnakes = (gameGrid, coords, distance) => {
             exists.top = true;
         }
 
-        if (coords.y + d < gameGrid.length) {
+        if (coords.y + d < boardLength) {
             gameGrid[coords.y + d][coords.x] = weighting; // DOWN
             exists.down = true;
         }
 
-        if (coords.x + d < gameGrid.length) {
+        if (coords.x + d < boardLength) {
             gameGrid[coords.y][coords.x + d] = weighting; // RIGHT
             exists.right = true;
         }
@@ -57,40 +52,47 @@ const paintAroundSnakes = (gameGrid, coords, distance) => {
 
         // There can only be a diagonal if both cardinal directions exist
 
-        if (exists.top && exists.right) {
-            gameGrid[coords.y - dDiag][coords.x + dDiag] = weighting; // TOP RIGHT
-        }
+        // I'm sorry about all these if statements :(
+        // if (exists.top && exists.right && coords.y - dDiag >= 0 && coords.x + dDiag < boardLength) {
 
-        if (exists.down && exists.right) {
-            gameGrid[coords.y + dDiag][coords.x + dDiag] = weighting; // DOWN RIGHT
-        }
+        //     gameGrid[coords.y - dDiag][coords.x + dDiag] = weighting; // TOP RIGHT
+        // }
 
-        if (exists.down && exists.left) {
-            gameGrid[coords.y + dDiag][coords.x - dDiag] = weighting; // DOWN LEFT
-        }
+        // if (exists.down && exists.right && coords.y + dDiag < boardLength && coords.x + dDiag < boardLength) {
 
-        if (exists.top && exists.left) {
-            gameGrid[coords.y - dDiag][coords.x - dDiag] = weighting; // TOP LEFT
-        }
+        //     gameGrid[coords.y + dDiag][coords.x + dDiag] = weighting; // DOWN RIGHT
+        // }
+
+        // if (exists.down && exists.left && coords.y + dDiag < boardLength && coords.x - dDiag >= 0) {
+
+        //     gameGrid[coords.y + dDiag][coords.x - dDiag] = weighting; // DOWN LEFT
+        // }
+
+        // if (exists.top && exists.left && coords.y - dDiag >= 0 && coords.x - dDiag >= 0) {
+
+        //     gameGrid[coords.y - dDiag][coords.x - dDiag] = weighting; // TOP LEFT
+        // }
 
         d--;
-        weighting *= 2;
+        // weighting *= 2;
     }
 
     return true;
 }
 
 const updateGridWithSnakes = (gameGrid, snakePositions) => {
-    snakePositions.snakes.data.forEach(snake => {
 
+    snakePositions.snakes.data.forEach(snake => {
         snake.body.data.forEach(coords => {
             paintAroundSnakes(gameGrid, coords, radius);
         })
+
         snake.body.data.forEach(coords => {
             gameGrid[coords.y][coords.x] = snakeWeight;
         })
     })
 
+    console.log(gameGrid)
     return true;
 }
 
