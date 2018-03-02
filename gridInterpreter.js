@@ -10,10 +10,19 @@ for (let x = 0; x < 20; x++) {
     grid.push(column);
 }
 
-console.log(grid)
 
+let opposites = {'up':'down', 'right':'left', 'down': 'up', 'left':'right'}
+let directions = ['up', 'down', 'left', 'right']
+let prevMove = 'up'
+let noGo = ""
 
 function interpreter(x, y, grid, prevMove) { // where x and y refer to the
-  const directions = ['up', 'down', 'left', 'right']
+  // first we need to remove the opposite of the previous move from the possibilities
+  // opposites.prevMove  is the one we can't pick
+  for (let key in opposites ){
+      if (key.toString() == prevMove){
+        noGo = opposites[key]
+      }
+  }
 
 }
