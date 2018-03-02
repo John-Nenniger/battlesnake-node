@@ -6,7 +6,7 @@ function absoluteDifference(a, b) {
   return Math.abs(a - b)
 }
 
-const foodGrid = (x, y, grid, weight) {
+const updateFoodGrid = (x, y, grid, weight) => {
   let minx = x - 3;
   let maxx = x + 3;
   let miny = y - 3;
@@ -29,4 +29,4 @@ const foodGrid = (x, y, grid, weight) {
   }
 }
 
-module.exports = foodGrid
+module.exports = updateFoodGrid

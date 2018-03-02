@@ -10,6 +10,7 @@ const {
 } = require('./handlers.js')
 
 const snakes = require('./snakes');
+const foodGrid = require('./foodGrid');
 
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
@@ -92,7 +93,7 @@ app.post('/move', (request, response) => {
   snakes.updateGridWithSnakes(grid, request.body);
 
   if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
-    foodGrid(food[0], food[1], grid)
+    foodGrid.updateFoodGrid(food[0], food[1], grid)
     foodPosition = [food[0], food[1]]
   }
 
