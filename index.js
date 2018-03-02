@@ -12,10 +12,6 @@ const {
 const snakes = require('./snakes');
 const foodGrid = require('./foodGrid');
 
-console.log(snakes);
-console.log(foodGrid);
-
-
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
 app.set('port', (process.env.PORT || 9001))
@@ -71,7 +67,6 @@ function randomDirection(prevDirection) {
 
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
-
   // Response data
   const data = {
     color: 'teal',
@@ -88,7 +83,7 @@ app.post('/move', (request, response) => {
   //
   let start = Date.now();
   //
-  const move = '';
+  let move = '';
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
@@ -101,7 +96,6 @@ app.post('/move', (request, response) => {
     foodPosition = [food[0], food[1]]
   }
 
-  console.log(grid)
 
   // Response data
   const data = {

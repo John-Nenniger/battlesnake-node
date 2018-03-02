@@ -29,4 +29,4 @@ const updateFoodGrid = (x, y, grid, weight) => {
   }
 }
 
-module.exports = updateFoodGrid
+module.exports.updateFoodGrid = updateFoodGrid;

@@ -94,7 +94,7 @@ const updateGridWithSnakes = (gameGrid, snakePositions) => {
     return true;
 }
 
-module.exports = updateGridWithSnakes;
+module.exports.updateGridWithSnakes = updateGridWithSnakes;
 
 /* TESTING */
 
