@@ -9,22 +9,7 @@ const {
   poweredByHandler
 } = require('./handlers.js')
 
-// Define global variables that will persist between turns here
-let foodPosition = []; // will just have an x and a y value
-let move = ""
-const grid = [];
-
-for (let x = 0; x < 20; x++) {
-  const column = [];
-  column[19] = 0;
-  column.fill(0);
-  grid.push(column);
-}
-
-// Functions go here, to be called in the move listener
-
-// just for testing
-console.log(grid)
+const snakes = require('./snakes');
 
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
@@ -36,26 +21,51 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(poweredByHandler)
 
-// --- SNAKE LOGIC GOES BELOW THIS LINE ---
+/* ----- BEGIN_SNEK_CODE ----- */
+
+// Define global variables that will persist between turns
+let prevMove = ''; // tracks previous move
+let foodPosition = []; // will just have an x and a y value
+const grid = []; // game grid/state
+
+for (let x = 0; x < 20; x++) {
+  const column = [];
+  column[19] = 0;
+  column.fill(0);
+  grid.push(column);
+}
+
+// Functions go here, to be called in the move listener
+
+// just for testing
+// foodGrid(3, 14, grid)
+// console.log(grid)
 
 function randomDirection(prevDirection) {
   let directions = [];
   switch (prevDirection) {
-    case "up": directions = ['up', 'left', 'right']
+    case "up":
+      directions = ['up', 'left', 'right']
       break;
-    case "down": directions = ['left', 'right', "down"]
+    case "down":
+      directions = ['left', 'right', "down"]
       break;
-    case "left": directions = ['left', 'up', "down"]
+    case "left":
+      directions = ['left', 'up', "down"]
       break;
-    case "right": directions = ['right', 'up', "down"]
+    case "right":
+      directions = ['right', 'up', "down"]
       break;
+    default:
+      directions = ['up', 'left', 'down', 'right']
   }
-  return directions[Math.floor(Math.random() * Math.floor(3))]
+  const randMove = directions[Math.floor(Math.random() * Math.floor(directions.length))];
+  prevMove = randMove; // update global prevMove variable
+  return randMove;
 }
 
 // Handle POST request to '/start'
 app.post('/start', (request, response) => {
-  // NOTE: Do something here to start the game
 
   // Response data
   const data = {
@@ -73,28 +83,32 @@ app.post('/move', (request, response) => {
   //
   let start = Date.now();
   //
-
+  const move = '';
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
+
+  // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
+  // Returns an updated game 'state'
+  snakes.updateGridWithSnakes(grid, request.body);
 
   if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
     foodGrid(food[0], food[1], grid)
     foodPosition = [food[0], food[1]]
   }
 
-
+  console.log(grid)
 
   // Response data
   const data = {
-    move: move, // one of: ['up','down','left','right']
-    taunt: 'WHEREMA GONNA GO?!', // optional, but encouraged!
+    move: move || randomDirection(prevMove), // If no move is defined default to a random direction. prevMove is a global var that keeps track of the prev move
+    taunt: 'WHEREMA GONNA GO?!'
   }
   let end = Date.now();
   console.log(`SNAKE MOVE TOOK ${end - start} MS`);
   return response.json(data)
 })
 
-// --- SNAKE LOGIC GOES ABOVE THIS LINE ---
+/* ----- END_SNEK_CODE ----- */
 
 app.use('*', fallbackHandler)
 app.use(notFoundHandler)
