@@ -102,8 +102,9 @@ let move = ""
 
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
-
+  //
   let start = Date.now();
+  //
 
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
@@ -113,12 +114,13 @@ app.post('/move', (request, response) => {
     foodPosition = [food[0], food[1]]
   }
 
+
+
   // Response data
   const data = {
     move: move, // one of: ['up','down','left','right']
     taunt: 'WHEREMA GONNA GO?!', // optional, but encouraged!
   }
-
   let end = Date.now();
   console.log(`SNAKE MOVE TOOK ${end - start} MS`);
   return response.json(data)
