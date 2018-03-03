@@ -119,7 +119,7 @@ app.post('/move', (request, response) => {
 
 app.post('/end', (request, response) => {
   prevMove = '';
-  response.status(200)
+  return response.status(200)
 })
 
 /* ----- END_SNEK_CODE ----- */
