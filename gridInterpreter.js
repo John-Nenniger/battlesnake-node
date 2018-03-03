@@ -1,4 +1,4 @@
-const snek = require('./snekJson');
+// const snek = require('./snekJson');
 
 // example grid
 //grid[#down][#right]
@@ -8,10 +8,10 @@ const snek = require('./snekJson');
 function pick(x, y, grid, prevMove) { // where x and y refer to the
   // first we need to remove the opposite of the previous move from the possibilities
   // opposites.prevMove  is the one we can't pick
-  conosole.log('in pick: ', 'x', x, `y:${y}`)
+  console.log('in pick: ', 'x', x, `y:${y}`)
   //so the problem is that grid[-1] is undefined, then we try to get a property from it
   // and that crashes... This is what needs to be fixed
-  if (!grid[y - 1]) {
+  if (!grid[y-1]) {
     let values = { 'down': grid[y + 1][x], 'right': grid[y][x + 1], 'left': grid[y][x - 1] };
   } else if (!grid[y + 1]) {
     let values = { 'up': grid[y - 1][x], 'right': grid[y][x + 1], 'left': grid[y][x - 1] };

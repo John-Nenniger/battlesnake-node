@@ -94,11 +94,10 @@ app.post('/move', (request, response) => {
     // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
     // Returns an updated game 'state'
     snakes.updateGridWithSnakes(gameGrid, request.body);
-
     foodGrid.updateFoodGrid(food[0], food[1], gameGrid, request.body.width) // This takes the board length as an arg now
-    foodPosition = [food[0], food[1]]
-    move = interpreter.pick(snekPlace[0], snekPlace[1], grid, prevMove)
-
+    console.log(gameGrid)
+    interpreter.pick(snekPlace[0], snekPlace[1], grid, prevMove)
+    //move = result of pick()...
     prevMove = move
 
     // Response data
