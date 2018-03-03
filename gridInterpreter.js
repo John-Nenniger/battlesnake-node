@@ -16,8 +16,6 @@ function pick(x, y, grid, prevMove) { // where x and y refer to the
   for (let key in values){
     if (isNaN(key) || values.key === opposites.prevMove){
       continue
-    } else if (){
-        delete values.key
     } else if (key > greatest){
       greatest = key
     }
