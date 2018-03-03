@@ -27,14 +27,6 @@ app.use(poweredByHandler)
 // Define global variables that will persist between turns
 let prevMove = ''; // tracks previous move
 let foodPosition = []; // will just have an x and a y value
-const grid = []; // game grid/state
-
-for (let x = 0; x < 20; x++) {
-  const column = [];
-  column[19] = 0;
-  column.fill(0);
-  grid.push(column);
-}
 
 // Functions go here, to be called in the move listener
 
@@ -80,6 +72,15 @@ app.post('/start', (request, response) => {
 
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
+  const grid = []; // game grid/state
+
+  for (let x = 0; x < 20; x++) {
+    const column = [];
+    column[19] = 0;
+    column.fill(0);
+    grid.push(column);
+  }
+
   let move = '';
   let start = Date.now();
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
@@ -89,7 +90,8 @@ app.post('/move', (request, response) => {
   // Returns an updated game 'state'
   snakes.updateGridWithSnakes(grid, request.body);
   foodGrid.updateFoodGrid(food[0], food[1], grid)
-  move = interpreter.pick(snekplace[0], snekplace[1], grid, move)
+  console.log(grid);
+  move = interpreter.pick(snekPlace[0], snekPlace[1], grid, move)
 
   // Response data
   const data = {
