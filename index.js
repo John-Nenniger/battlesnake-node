@@ -92,7 +92,7 @@ app.post('/move', (request, response) => {
     const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y];
     let food = [];
     request.body.food.data.forEach((coords) => {
-      food.push([coords.x, coords.y])
+        food.push([coords.x, coords.y])
     })
     console.log(food)
 
@@ -101,6 +101,14 @@ app.post('/move', (request, response) => {
     snakes.updateGridWithSnakes(gameGrid, request.body);
     // console.log(gameGrid)
     foodGrid.updateFoodGrid(food, gameGrid, request.body.width) // This takes the board length as an arg now
+
+    try {
+        interpreter.pick(snekPlace[0], snekPlace[1], gameGrid, prevMove)
+    } catch (err) {
+        console.log('error found')
+        console.log(err)
+    }
+
     move = interpreter.pick(snekPlace[0], snekPlace[1], gameGrid, prevMove)
     //move = result of pick()...
     prevMove = move
