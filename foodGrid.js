@@ -7,15 +7,15 @@ function absoluteDifference(a, b) {
 }
 
 const updateFoodGrid = (food, grid, boardLength) => {
+  console.log(array)
   food.forEach((array) => {
-    console.log(array, array[0], array[1])
     let x = array[0]
     let y = array[1]
     let minx = x - 5;
     let maxx = x + 5;
     let miny = y - 5;
     let maxy = y + 5;
-
+    console.log(x, y)
     for (let currentx = minx, counter = 0; currentx <= maxx; currentx++ , counter++) {
       if (currentx < 0 || currentx > boardLength - 1) {
         continue
