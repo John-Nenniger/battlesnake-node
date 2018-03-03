@@ -11,16 +11,18 @@ let noGo = ""
 function pick(x, y, grid, prevMove) { // where x and y refer to the
   // first we need to remove the opposite of the previous move from the possibilities
   // opposites.prevMove  is the one we can't pick
-  let values = {grid[y+1][x]:'down', grid[y-1][x]:'up', grid[y][x+1]:'right', grid[y][x]:'left'};
+  let values = {'down':grid[y+1][x], 'up':grid[y-1][x], 'right':grid[y][x+1], 'left':grid[y][x-1]};
   let greatest = -100;
+  let nextMove = '';
   for (let key in values){
-    if (isNaN(key) || values.key === opposites.prevMove){
+    if (isNaN(values[key]) || key === opposites[prevMove]){
       continue
-    } else if (key > greatest){
-      greatest = key
+    } else if (values[key] > greatest){
+      greatest = values[key]
+      nextMove = key;
     }
   }
-  return greatest
+  return nextMove
 }
 
 module.exports = {pick}
