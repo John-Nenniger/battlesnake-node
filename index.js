@@ -94,7 +94,6 @@ app.post('/move', (request, response) => {
     request.body.food.data.forEach((coords) => {
         food.push([coords.x, coords.y])
     })
-    console.log(food)
 
     // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
     // Returns an updated game 'state'
@@ -111,7 +110,7 @@ app.post('/move', (request, response) => {
 
     move = interpreter.pick(snekPlace[0], snekPlace[1], gameGrid, prevMove)
     //move = result of pick()...
-    prevMove = move
+    //prevMove = move
 
 
     // Response data
@@ -123,6 +122,10 @@ app.post('/move', (request, response) => {
     let end = Date.now();
     console.log(`SNAKE MOVE TOOK ${end - start} MS`);
     return response.json(data)
+})
+
+app.post('/end', (request, response) => {
+  prevMove = '';
 })
 
 /* ----- END_SNEK_CODE ----- */
