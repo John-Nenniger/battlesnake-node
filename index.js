@@ -26,7 +26,7 @@ app.use(poweredByHandler)
 
 // Define global variables that will persist between turns
 let prevMove = ''; // tracks previous move
-let foodPosition = []; // will just have an x and a y value
+// will just have an x and a y value
 
 
 // Functions go here, to be called in the move listener
@@ -89,8 +89,8 @@ app.post('/move', (request, response) => {
     //
     let move = '';
     let gameGrid = defineGrid([], request.body.height, request.body.width); // Define a new grid every turn. Solves problem of bleeding of snakes moving around on the board
-    const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
-    const food = [request.body.food.data[0].x, request.body.food.data[0].y]
+    const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y];
+    const food = [request.body.food.data[0].x, request.body.food.data[0].y];
 
     // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
     // Returns an updated game 'state'

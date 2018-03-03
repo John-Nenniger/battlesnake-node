@@ -1,5 +1,5 @@
 function foodValue(distance) {
-  return Math.floor(Math.log(25 / (distance + 1)) * 5) - 6
+  return Math.floor(Math.log(25 / (distance + 3)) * 5) - 3
 }
 
 function absoluteDifference(a, b) {
@@ -7,10 +7,10 @@ function absoluteDifference(a, b) {
 }
 
 const updateFoodGrid = (x, y, grid, boardLength) => {
-  let minx = x - 3;
-  let maxx = x + 3;
-  let miny = y - 3;
-  let maxy = y + 3;
+  let minx = x - 5;
+  let maxx = x + 5;
+  let miny = y - 5;
+  let maxy = y + 5;
 
   for (let currentx = minx, counter = 0; currentx <= maxx; currentx++ , counter++) {
     if (currentx < 0 || currentx > boardLength - 1) {
@@ -18,7 +18,7 @@ const updateFoodGrid = (x, y, grid, boardLength) => {
     }
     // now I need a number that starts at 1, then goes up to 9 by incrementign by 2
     // then increments by 2 back down to 1.  Maybe I'll just make it an array?
-    let diamond = [1, 2, 3, 4, 3, 2, 1]
+    let diamond = [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1]
     for (let currenty = y - diamond[counter]; currenty <= y + diamond[counter]; currenty++) {
       if (currenty < 0 || currenty > boardLength) {
         continue
