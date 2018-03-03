@@ -25,7 +25,7 @@ app.use(poweredByHandler)
 /* ----- BEGIN_SNEK_CODE ----- */
 
 // Define global variables that will persist between turns
-let prevMove = 'up'; // tracks previous move
+let prevMove = ''; // tracks previous move
 let foodPosition = []; // will just have an x and a y value
 
 // Functions go here, to be called in the move listener
@@ -85,15 +85,15 @@ app.post('/move', (request, response) => {
   let start = Date.now();
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
-  console.log(snekPlace[0], snekPlace[1])
+  console.log('snekplace',snekPlace[0], snekPlace[1])
   // console.log(request.body.you)
   // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
   // Returns an updated game 'state'
   snakes.updateGridWithSnakes(grid, request.body);
   foodGrid.updateFoodGrid(food[0], food[1], grid)
-  // console.log(grid);
+  console.log(grid)
   move = interpreter.pick(snekPlace[0], snekPlace[1], grid, prevMove)
-
+  console.log(move);
   // Response data
   const data = {
     move: move || randomDirection(prevMove), // If no move is defined default to a random direction. prevMove is a global var that keeps track of the prev move
