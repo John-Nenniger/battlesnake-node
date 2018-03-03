@@ -83,13 +83,15 @@ const paintAroundSnakes = (gameGrid, coords, distance) => {
 const updateGridWithSnakes = (gameGrid, snakePositions) => {
 
     snakePositions.snakes.data.forEach(snake => {
-        snake.body.data.forEach(coords => {
-            paintAroundSnakes(gameGrid, coords, radius);
-        })
+        if (snake.health > 0) {
+            snake.body.data.forEach(coords => {
+                paintAroundSnakes(gameGrid, coords, radius);
+            })
 
-        snake.body.data.forEach(coords => {
-            gameGrid[coords.y][coords.x] = snakeWeight;
-        })
+            snake.body.data.forEach(coords => {
+                gameGrid[coords.y][coords.x] = snakeWeight;
+            })
+        }
     })
 
     if (snakePositions.you.body.data.length > 0) {
