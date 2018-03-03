@@ -36,10 +36,10 @@ let foodPosition = []; // will just have an x and a y value
 // foodGrid(3, 14, grid)
 // console.log(grid)
 
-function defineGrid(grid = []) {
-    for (let x = 0; x < 20; x++) {
+function defineGrid(grid = [], height = 20, width = 20) {
+    for (let x = 0; x < height; x++) {
         const column = [];
-        column[19] = 0;
+        column[width - 1] = 0;
         column.fill(0);
         grid.push(column);
     }
@@ -88,7 +88,7 @@ app.post('/move', (request, response) => {
     let start = Date.now();
     //
     let move = '';
-    let gameGrid = defineGrid(); // Define a new grid every turn. Solves problem of bleeding of snakes moving around on the board
+    let gameGrid = defineGrid([], request.body.height, request.body.width); // Define a new grid every turn. Solves problem of bleeding of snakes moving around on the board
 
     const food = [request.body.food.data[0].x, request.body.food.data[0].y]
     // const food = { x: request.body.food.data[0].x, y: request.body.food.data[0].y}
@@ -99,7 +99,7 @@ app.post('/move', (request, response) => {
     snakes.updateGridWithSnakes(gameGrid, request.body);
 
     // if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
-    foodGrid.updateFoodGrid(food[0], food[1], gameGrid)
+    foodGrid.updateFoodGrid(food[0], food[1], gameGrid, request.body.width) // This takes the board length as an arg now
     foodPosition = [food[0], food[1]]
     // }
 

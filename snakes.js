@@ -53,25 +53,25 @@ const paintAroundSnakes = (gameGrid, coords, distance) => {
         // There can only be a diagonal if both cardinal directions exist
 
         // I'm sorry about all these if statements :(
-        // if (exists.top && exists.right && coords.y - dDiag >= 0 && coords.x + dDiag < boardLength) {
+        if (exists.top && exists.right && coords.y - dDiag >= 0 && coords.x + dDiag < boardLength) {
 
-        //     gameGrid[coords.y - dDiag][coords.x + dDiag] = weighting; // TOP RIGHT
-        // }
+            gameGrid[coords.y - dDiag][coords.x + dDiag] = weighting; // TOP RIGHT
+        }
 
-        // if (exists.down && exists.right && coords.y + dDiag < boardLength && coords.x + dDiag < boardLength) {
+        if (exists.down && exists.right && coords.y + dDiag < boardLength && coords.x + dDiag < boardLength) {
 
-        //     gameGrid[coords.y + dDiag][coords.x + dDiag] = weighting; // DOWN RIGHT
-        // }
+            gameGrid[coords.y + dDiag][coords.x + dDiag] = weighting; // DOWN RIGHT
+        }
 
-        // if (exists.down && exists.left && coords.y + dDiag < boardLength && coords.x - dDiag >= 0) {
+        if (exists.down && exists.left && coords.y + dDiag < boardLength && coords.x - dDiag >= 0) {
 
-        //     gameGrid[coords.y + dDiag][coords.x - dDiag] = weighting; // DOWN LEFT
-        // }
+            gameGrid[coords.y + dDiag][coords.x - dDiag] = weighting; // DOWN LEFT
+        }
 
-        // if (exists.top && exists.left && coords.y - dDiag >= 0 && coords.x - dDiag >= 0) {
+        if (exists.top && exists.left && coords.y - dDiag >= 0 && coords.x - dDiag >= 0) {
 
-        //     gameGrid[coords.y - dDiag][coords.x - dDiag] = weighting; // TOP LEFT
-        // }
+            gameGrid[coords.y - dDiag][coords.x - dDiag] = weighting; // TOP LEFT
+        }
 
         d--;
         // weighting *= 2;
