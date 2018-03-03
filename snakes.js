@@ -4,6 +4,7 @@ const adjacentToSnakeWeight = -3;
 const snakeWeight = -12;
 const radius = 2;
 
+
 let grid = [];
 for (let x = 0; x < 20; x++) {
     const column = [];
@@ -13,7 +14,7 @@ for (let x = 0; x < 20; x++) {
 }
 
 const paintAroundSnakes = (gameGrid, coords, distance) => {
-    // Will only update the grid if the coordinates provided 
+    // Will only update the grid if the coordinates provided
     // are within the bounds of the game
 
     let d = distance;
