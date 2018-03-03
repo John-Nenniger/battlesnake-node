@@ -74,7 +74,7 @@ const paintAroundSnakes = (gameGrid, coords, distance) => {
         }
 
         d--;
-        weighting *= 1.5;
+        weighting *= 2;
     }
 
     return true;
@@ -100,8 +100,6 @@ const updateGridWithSnakes = (gameGrid, snakePositions) => {
         });
     }
 
-
-    // console.log(gameGrid)
     return true;
 }
 

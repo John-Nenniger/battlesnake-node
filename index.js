@@ -11,7 +11,7 @@ const {
 
 const snakes = require('./snakes');
 const foodGrid = require('./foodGrid');
-const interpreter = require('./gridInterpreter')
+const interpreter = require('./gridInterpreter');
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
 app.set('port', (process.env.PORT || 9001))
@@ -96,7 +96,6 @@ app.post('/move', (request, response) => {
     // Returns an updated game 'state'
     snakes.updateGridWithSnakes(gameGrid, request.body);
     foodGrid.updateFoodGrid(food[0], food[1], gameGrid, request.body.width) // This takes the board length as an arg now
-    console.log(snekPlace[0], snekPlace[1], gameGrid, prevMove)
     move = interpreter.pick(snekPlace[0], snekPlace[1], gameGrid, prevMove)
     //move = result of pick()...
     prevMove = move
