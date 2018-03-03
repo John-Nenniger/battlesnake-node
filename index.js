@@ -11,7 +11,7 @@ const {
 
 const snakes = require('./snakes');
 const foodGrid = require('./foodGrid');
-const interpreter = require('./gridinterpreter')
+const interpreter = require('./gridInterpreter');
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
 app.set('port', (process.env.PORT || 9001))
@@ -90,14 +90,14 @@ app.post('/move', (request, response) => {
     let gameGrid = defineGrid([], request.body.height, request.body.width); // Define a new grid every turn. Solves problem of bleeding of snakes moving around on the board
 
     const food = [request.body.food.data[0].x, request.body.food.data[0].y]
+    const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
     // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
     // Returns an updated game 'state'
     snakes.updateGridWithSnakes(gameGrid, request.body);
 
     foodGrid.updateFoodGrid(food[0], food[1], gameGrid, request.body.width) // This takes the board length as an arg now
-    foodPosition = [food[0], food[1]]
-    move = interpreter.pick(snekPlace[0], snekPlace[1], grid, prevMove)
+    move = interpreter.pick(snekPlace[0], snekPlace[1], gameGrid, prevMove)
 
     prevMove = move
 
