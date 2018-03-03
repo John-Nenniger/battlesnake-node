@@ -6,14 +6,14 @@ function absoluteDifference(a, b) {
   return Math.abs(a - b)
 }
 
-const updateFoodGrid = (x, y, grid, weight, boardLength) => {
+const updateFoodGrid = (x, y, grid, boardLength) => {
   let minx = x - 3;
   let maxx = x + 3;
   let miny = y - 3;
   let maxy = y + 3;
 
   for (let currentx = minx, counter = 0; currentx <= maxx; currentx++ , counter++) {
-    if (currentx < 0 || currentx > boardLength) {
+    if (currentx < 0 || currentx > boardLength - 1) {
       continue
     }
     // now I need a number that starts at 1, then goes up to 9 by incrementign by 2
@@ -24,8 +24,8 @@ const updateFoodGrid = (x, y, grid, weight, boardLength) => {
         continue
       }
       distance = absoluteDifference(currentx, x) + absoluteDifference(y, currenty)
-      console.log(foodValue(distance));
-      console.log(grid[currenty][currentx]);
+      // console.log(foodValue(distance));
+      // console.log(grid[currenty][currentx]);
 
       grid[currenty][currentx] += foodValue(distance)
     }

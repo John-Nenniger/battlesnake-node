@@ -1,8 +1,8 @@
 const snek = require('./snekJson');
 
-const adjacentToSnakeWeight = 1;
-const snakeWeight = 2;
-const radius = 2;
+const adjacentToSnakeWeight = -1;
+const snakeWeight = -6;
+const radius = 6;
 
 const paintAroundSnakes = (gameGrid, coords, distance) => {
     // Will only update the grid if the coordinates provided 
@@ -74,7 +74,7 @@ const paintAroundSnakes = (gameGrid, coords, distance) => {
         }
 
         d--;
-        // weighting *= 2;
+        weighting *= 1.5;
     }
 
     return true;
@@ -92,7 +92,14 @@ const updateGridWithSnakes = (gameGrid, snakePositions) => {
         })
     })
 
-    console.log(gameGrid)
+    if (snakePositions.you.body.data.length > 0) {
+        snakePositions.you.body.data.forEach(coords => {
+            gameGrid[coords.y][coords.x] = snakeWeight;
+        });
+    }
+
+
+    // console.log(gameGrid)
     return true;
 }
 
