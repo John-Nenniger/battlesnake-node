@@ -15,12 +15,6 @@ const paintAroundSnakes = (gameGrid, coords, distance, val) => {
     let weighting = adjacentToSnakeWeight
     const boardLength = gameGrid.length;
 
-    // d is equal to the 'radius' to paint around paint from the outside in. Stop when d < 0
-    // adjacentToSnakeWeight can also be adjusted on every increment
-
-
-    // Hello, gross while loop. You've gotten very big.
-    // while (d > 0) {
 
     const exists = {
         top: false,
@@ -74,10 +68,6 @@ const paintAroundSnakes = (gameGrid, coords, distance, val) => {
         gameGrid[coords.y - dDiag][coords.x - dDiag] = weighting; // TOP LEFT
     }
 
-    // d--;
-    // weighting -= 1;
-    // }
-
     return true;
 }
 
@@ -89,12 +79,11 @@ const updateGridWithSnakes = (gameGrid, snakePositions) => {
         // console.log(snake.body.data);
 
         if (snake.health > 0) {
-
-
             snake.body.data.forEach((coords, index) => {
                 if (coords.x === snakePositions.you.body.data[index].x && coords.y === snakePositions.you.body.data[index].y) {
                     // This is my snake!
                 } else {
+                    // This is an enemy snake ><
                     const headCoords = {
                         x: snake.body.data[0].x,
                         y: snake.body.data[0].y
@@ -106,7 +95,7 @@ const updateGridWithSnakes = (gameGrid, snakePositions) => {
 
             snake.body.data.forEach(coords => {
                 if (coords.x !== snakePositions.you.body.data[0].x && coords.y !== snakePositions.you.body.data[0].y) {
-                    // console.log('not my snake');
+                    // This is an enemy snake ><
                     gameGrid[coords.y][coords.x] = snakeWeight;
                 }
             })
@@ -118,7 +107,6 @@ const updateGridWithSnakes = (gameGrid, snakePositions) => {
             gameGrid[coords.y][coords.x] = -12;
         });
     }
-
     return true;
 }
 
