@@ -5,7 +5,7 @@ const snakeWeight = -6;
 const radius = 6;
 
 const paintAroundSnakes = (gameGrid, coords, distance) => {
-    // Will only update the grid if the coordinates provided 
+    // Will only update the grid if the coordinates provided
     // are within the bounds of the game
 
     let d = distance;

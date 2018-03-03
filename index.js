@@ -11,7 +11,7 @@ const {
 
 const snakes = require('./snakes');
 const foodGrid = require('./foodGrid');
-
+const interpreter = require('./gridinterpreter')
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
 app.set('port', (process.env.PORT || 9001))
@@ -27,7 +27,6 @@ app.use(poweredByHandler)
 // Define global variables that will persist between turns
 let prevMove = ''; // tracks previous move
 let foodPosition = []; // will just have an x and a y value
-// const grid = defineGrid(); // game grid/state
 
 
 // Functions go here, to be called in the move listener
@@ -98,8 +97,9 @@ app.post('/move', (request, response) => {
 
     foodGrid.updateFoodGrid(food[0], food[1], gameGrid, request.body.width) // This takes the board length as an arg now
     foodPosition = [food[0], food[1]]
+    move = interpreter.pick(snekPlace[0], snekPlace[1], grid, prevMove)
 
-    console.log(gameGrid)
+    prevMove = move
 
     // Response data
     const data = {
@@ -145,3 +145,7 @@ app.listen(app.get('port'), () => {
 // const food = { x: request.body.food.data[0].x, y: request.body.food.data[0].y}
 // const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
+//
+// if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
+//   foodPosition = [food[0], food[1]]
+// }
