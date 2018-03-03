@@ -101,14 +101,7 @@ app.post('/move', (request, response) => {
     // console.log(food, gameGrid, request.body.width)
     console.log(food);
     foodGrid.updateFoodGrid(food, gameGrid, request.body.width) // This takes the board length as an arg now
-
-    try {
-        interpreter.pick(snekPlace[0], snekPlace[1], gameGrid, prevMove)
-    } catch (err) {
-        console.log('error found')
-        console.log(err)
-    }
-
+    console.log('past food')
     move = interpreter.pick(snekPlace[0], snekPlace[1], gameGrid, prevMove)
     //move = result of pick()...
     //prevMove = move
@@ -126,8 +119,8 @@ app.post('/move', (request, response) => {
 })
 
 app.post('/end', (request, response) => {
-  prevMove = '';
-  response.status(200)
+    prevMove = '';
+    return response.status(200)
 })
 
 /* ----- END_SNEK_CODE ----- */
