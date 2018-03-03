@@ -11,7 +11,7 @@ const {
 
 const snakes = require('./snakes');
 const foodGrid = require('./foodGrid');
-
+const interpreter = require('./gridinterpreter')
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
 app.set('port', (process.env.PORT || 9001))
@@ -80,28 +80,23 @@ app.post('/start', (request, response) => {
 
 // Handle POST request to '/move'
 app.post('/move', (request, response) => {
-  //
-  let start = Date.now();
-  //
   let move = '';
+  let start = Date.now();
   const food = [request.body.food.data[0].x, request.body.food.data[0].y]
   const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
   // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
   // Returns an updated game 'state'
   snakes.updateGridWithSnakes(grid, request.body);
-
-  if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
-    foodGrid.updateFoodGrid(food[0], food[1], grid)
-    foodPosition = [food[0], food[1]]
-  }
-
+  foodGrid.updateFoodGrid(food[0], food[1], grid)
+  move = interpreter.pick(snekplace[0], snekplace[1], grid, move)
 
   // Response data
   const data = {
     move: move || randomDirection(prevMove), // If no move is defined default to a random direction. prevMove is a global var that keeps track of the prev move
     taunt: 'WHEREMA GONNA GO?!'
   }
+  prevMove = move
   let end = Date.now();
   console.log(`SNAKE MOVE TOOK ${end - start} MS`);
   return response.json(data)
@@ -135,3 +130,8 @@ app.listen(app.get('port'), () => {
 // console.log(`I am HERE! x:${request.body.you.body.data[0].x} y:${request.body.you.body.data[0].y}`)
 // console.log(column, column.length)
 // console.log(grid)
+
+//
+// if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
+//   foodPosition = [food[0], food[1]]
+// }
