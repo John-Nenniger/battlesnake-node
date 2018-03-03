@@ -35,6 +35,7 @@ function pick(x, y, grid, prevMove) { // where x and y refer to the
       //console.log(greatest, nextMove)
     }
   }
+  console.log(grid)
   // console.log('greatest: ', greatest, 'nextMove: ', nextMove)
   return nextMove
 }

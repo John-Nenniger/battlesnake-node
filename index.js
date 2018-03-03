@@ -91,7 +91,6 @@ app.post('/move', (request, response) => {
     let gameGrid = defineGrid([], request.body.height, request.body.width); // Define a new grid every turn. Solves problem of bleeding of snakes moving around on the board
     const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
     const food = [request.body.food.data[0].x, request.body.food.data[0].y]
-    const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
     // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
     // Returns an updated game 'state'
@@ -100,6 +99,7 @@ app.post('/move', (request, response) => {
     move = interpreter.pick(snekPlace[0], snekPlace[1], gameGrid, prevMove)
     //move = result of pick()...
     prevMove = move
+
 
     // Response data
     const data = {
