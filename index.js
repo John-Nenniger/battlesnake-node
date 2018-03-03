@@ -45,6 +45,7 @@ function defineGrid(grid = [], height = 20, width = 20) {
     return grid;
 }
 
+
 function randomDirection(prevDirection) {
     let directions = [];
     switch (prevDirection) {
@@ -88,17 +89,16 @@ app.post('/move', (request, response) => {
     //
     let move = '';
     let gameGrid = defineGrid([], request.body.height, request.body.width); // Define a new grid every turn. Solves problem of bleeding of snakes moving around on the board
-
+    const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
     const food = [request.body.food.data[0].x, request.body.food.data[0].y]
     const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
     // Paint grid with snakes and adjacent tiles. Takes the game grid and post request as arguments.
     // Returns an updated game 'state'
     snakes.updateGridWithSnakes(gameGrid, request.body);
-
     foodGrid.updateFoodGrid(food[0], food[1], gameGrid, request.body.width) // This takes the board length as an arg now
     move = interpreter.pick(snekPlace[0], snekPlace[1], gameGrid, prevMove)
-
+    //move = result of pick()...
     prevMove = move
 
     // Response data
@@ -143,7 +143,6 @@ app.listen(app.get('port'), () => {
 
 // From app.post/move
 // const food = { x: request.body.food.data[0].x, y: request.body.food.data[0].y}
-// const snekPlace = [request.body.you.body.data[0].x, request.body.you.body.data[0].y]
 
 //
 // if (request.body.turn === 1 || foodPosition[0] !== food[0] || foodPosition[1] !== food[1]) {
